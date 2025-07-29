@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensure full history is fetched
+          fetch-depth: 0
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Updated to match dependency requirements
+          node-version: '18'
       - name: Lint frontend
         working-directory: frontend
         run: |
@@ -82,7 +82,7 @@ jobs:
         run: |
           cd backend && npm install && node index.js &
           cd ../frontend && npm install && npm run build && npx serve -s build &
-          sleep 10  # Wait for services to start
+          sleep 10
       - name: Run integration smoke-test
         run: ./scripts/integration.sh
 
