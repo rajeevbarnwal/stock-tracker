@@ -26,5 +26,5 @@ RUN npm install -g serve
 
 EXPOSE 3000 4000
 
-CMD sh -c "node backend/index.js & serve -s frontend/build -l 3000"
-
+COPY entrypoint.sh /app/entrypoint.sh
+CMD ["/app/entrypoint.sh"]
