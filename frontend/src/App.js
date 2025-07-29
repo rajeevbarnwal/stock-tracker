@@ -1,14 +1,13 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react';
 
-test('renders Stock Tracker header', () => {
-  render(<App />);
-  const headerElement = screen.getByText(/Stock Tracker/i);
-  expect(headerElement).toBeInTheDocument();
-});
+function App() {
+  return (
+    <div style={{ maxWidth: '600px', margin: '2rem auto', textAlign: 'center' }}>
+      <h1>📈 Stock Tracker</h1>
+      <input placeholder="Enter ticker, e.g. AAPL" style={{ padding: '0.5rem', fontSize: '1rem' }} />
+      <button style={{ marginLeft: '8px', padding: '0.5rem 1rem' }}>Fetch</button>
+    </div>
+  );
+}
 
-test('renders Fetch button', () => {
-  render(<App />);
-  const buttonElement = screen.getByText(/Fetch/i);
-  expect(buttonElement).toBeInTheDocument();
-});
+export default App;
