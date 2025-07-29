@@ -41,6 +41,8 @@ jobs:
       - name: Install & Run Backend Tests
         working-directory: backend
         run: |
+      - name: Clean Workspace
+        run: rm -rf * && git reset --hard
           npm install
           npm test
 
