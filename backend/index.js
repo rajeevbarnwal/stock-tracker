@@ -1,20 +1,19 @@
 const express = require('express');
-const axios   = require('axios');
+const axios = require('axios');
 
-const app  = express();
+const app = express();
 const port = process.env.PORT || 4000;
 const API_KEY = process.env.ALPHAVANTAGE_KEY || 'demo';
 
 // Health check
 app.get('/', (req, res) => {
-  res.send('🟢 Stock‑Tracker API is up!');
+  res.send('🟢 Stock-Tracker API is up!');
 });
 
 // Stock price endpoint
 app.get('/api/stock/:ticker', async (req, res) => {
   const ticker = req.params.ticker.toUpperCase();
 
-  // Build the AlphaVantage URL _inside_ the handler
   const url = ticker === 'DEMO'
     ? `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo`
     : `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${API_KEY}`;
@@ -35,7 +34,12 @@ app.get('/api/stock/:ticker', async (req, res) => {
   }
 });
 
-// Start server
-app.listen(port, () => {
-  console.log(`🚀 Server listening on http://localhost:${port}`);
-});
+// Export app for testing
+module.exports = app;
+
+// Start server only if run directly
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`🚀 Server listening on http://localhost:${port}`);
+  });
+}
