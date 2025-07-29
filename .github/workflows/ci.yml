@@ -15,7 +15,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'  # Updated to match dependency requirements
       - name: Lint frontend
         working-directory: frontend
         run: |
@@ -34,15 +34,15 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
+      - name: Clean Workspace
+        run: rm -rf * && git reset --hard
       - name: Install & Run Backend Tests
         working-directory: backend
         run: |
-      - name: Clean Workspace
-        run: rm -rf * && git reset --hard
           npm install
           npm test
 
@@ -53,10 +53,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
+      - name: Clean Workspace
+        run: rm -rf * && git reset --hard
       - name: Install & Run Frontend Tests
         working-directory: frontend
         run: |
@@ -70,6 +72,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Clean Workspace
+        run: rm -rf * && git reset --hard
+      - name: Start Services
+        run: |
+          cd backend && npm install && node index.js &
+          cd ../frontend && npm install && npm run build && npx serve -s build &
+          sleep 10  # Wait for services to start
       - name: Run integration smoke-test
         run: ./scripts/integration.sh
 
