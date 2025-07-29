@@ -1,8 +1,19 @@
 const request = require('supertest');
-const app     = require('../index'); // ensure you export `app` in index.js
+const app = require('../index');
 
-test('GET / returns health check', async () => {
-  const res = await request(app).get('/');
-  expect(res.text).toMatch(/Stock‑Tracker API is up/);
+describe('Health Check', () => {
+  let server;
+
+  beforeAll(() => {
+    server = app.listen(0); // Listen on a random port
+  });
+
+  afterAll((done) => {
+    server.close(done); // Properly close the server
+  });
+
+  test('GET / returns health check', async () => {
+    const res = await request(server).get('/');
+    expect(res.text).toMatch(/Stock-Tracker API is up/);
+  });
 });
-
